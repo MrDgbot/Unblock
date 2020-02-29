@@ -95,7 +95,12 @@ hook.request.before = ctx => {
 				netease.path = netease.path.replace(/\/\d*$/, '')
 				ctx.netease = netease
 				// console.log(netease.path, netease.param)
-
+			if (netease.path.includes('song/enhance')) {
+		req.headers.cookie = [
+			'MUSIC_U=a6cf9d55c0d97e8cceab7d4bac08eebc0e10537c892aed3088e5ad993a34c565e55115efebb0f25cc3bd074f675680db22c7067cce3c7469', 
+				req.headers.cookie.replace(/\s*MUSIC_\w=[^\s;]+;*/g, '')
+			].filter(line => line).join('; ')
+	}
 				if (netease.path == '/api/song/enhance/download/url')
 					return pretendPlay(ctx)
 			}
